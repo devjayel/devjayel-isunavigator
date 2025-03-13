@@ -21,6 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
+        'location',
+        'verification_status',
+        'is_online',
+        'is_anonymous',
+        'approval_status'
     ];
 
     /**
@@ -44,5 +50,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        // Assuming you store avatars in the 'storage/app/public/avatars' folder
+        return asset('storage/avatars/' . $this->avatar);
     }
 }

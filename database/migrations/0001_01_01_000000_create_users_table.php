@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string(column: 'name');
+            $table->string("avatar")->default("avatars/default.jpg")->nullable();
+            $table->string("location")->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum("approval_status", ["approved", "waiting", "cancelled"])->default("waiting")->nullable();
+            $table->boolean("is_online")->default(false);
+            $table->boolean("is_anonymous")->default(false);
+            $table->enum("level", ["student","visitor","staff","faculty","admin"])->default("student");
             $table->rememberToken();
             $table->timestamps();
         });

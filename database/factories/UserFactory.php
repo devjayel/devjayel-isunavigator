@@ -23,11 +23,16 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $level = fake()->randomElement(['student', 'visitor', 'staff', 'faculty', 'admin']);
+
         return [
             'name' => fake()->name(),
+            'location' => fake()->city(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => Hash::make('password'),
+            'approval_status' => $level === 'admin' ? 'approved' : fake()->randomElement(['approved', 'waiting', 'cancelled']),
+            'level' => $level,
             'remember_token' => Str::random(10),
         ];
     }
